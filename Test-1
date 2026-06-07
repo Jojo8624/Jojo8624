@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wisney+</title>
+
+<style>
+  
+  body.login-mode {
+    overflow: hidden;
+}
+
+  #app.hidden {
+    display: none !important;
+}
+
+#authScreen.hidden {
+    display: none !important;
+}
+  
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:#08111f;
+    color:white;
+}
+
+.footer{
+    margin-top:40px;
+    padding:30px 20px;
+    background:black;
+    text-align:center;
+}
+
+.footer-logo{
+    height:35px;
+    margin-bottom:15px;
+}
+
+.footer-links p{
+    color:white;
+    margin:5px 0;
+    font-size:14px;
+    cursor:pointer;
+}
+
+.footer-links p:hover{
+    text-decoration:underline;
+}
+
+.footer-copy{
+    margin-top:15px;
+    font-size:12px;
+    color:#bbb;
+}
+
+.hidden{
+    display:none;
+}
+
+.container{
+    max-width:1200px;
+    margin:auto;
+}
+
+/* LOGIN */
+
+.auth-screen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.remember-row{
+    display:flex;
+    align-items:center;
+    justify-content:flex-start;
+    gap:4px;
+    margin:6px 0 10px;
+    width:100%;
+    text-align:left;
+    white-space:nowrap;
+}
+
+.remember-row input{
+    width:auto;
+    margin:0;
+    padding:0;
+}
+
+.auth-box{
+    background:#132238;
+    padding:30px;
+    border-radius:15px;
+    width:320px;
+}
+
+.auth-box h1{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+.auth-box input{
+    width:100%;
+    padding:12px;
+    margin-bottom:10px;
+    border:none;
+    border-radius:8px;
+}
+
+.auth-box button{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+    background:#0063e5;
+    color:white;
+    cursor:pointer;
+}
+
+.auth-box p{
+    text-align:center;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+/* APP */
+
+header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px;
+    background:#0d1b2d;
+}
+
+.logo img{
+    height:40px;
+    width:auto;
+    display:block;
+}
+
+
+.hero{
+    height:300px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    background:linear-gradient(
+    rgba(0,0,0,.4),
+    rgba(0,0,0,.7)),
+    url("https://uploads.onecompiler.io/44ks3jcac/1780705259803/Screenshot%202026-06-05%205.17.36%20PM.png");
+    background-size:cover;
+}
+
+.hero h1{
+    font-size:3rem;
+}
+
+.section{
+    padding:20px;
+}
+
+.row{
+    display:flex;
+    gap:15px;
+    overflow-x:auto;
+}
+
+.card{
+    min-width:180px;
+    background:#15263f;
+    border-radius:12px;
+    overflow:hidden;
+}
+
+.poster{
+    height:250px;
+    background:#28476f;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.1rem;
+}
+
+.card-content{
+    padding:10px;
+}
+
+.card button{
+    margin-top:8px;
+    width:100%;
+    padding:8px;
+    border:none;
+    border-radius:6px;
+    background:#0063e5;
+    color:white;
+    cursor:pointer;
+}
+
+.progress{
+    width:100%;
+    height:8px;
+    background:#333;
+    border-radius:4px;
+    margin-top:8px;
+}
+
+.progress-fill{
+    height:100%;
+    background:#00d26a;
+    border-radius:4px;
+}
+
+.search{
+    padding:15px 20px;
+}
+
+.search input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:8px;
+}
+
+.logout{
+    padding:10px 15px;
+    border:none;
+    border-radius:8px;
+    background:#e53935;
+    color:white;
+    cursor:pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+
+<div id="authScreen" class="auth-screen">
+    <div class="auth-box">
+        <h1>Wisney+</h1>
+
+        <input id="username" placeholder="Username">
+      
+        <input id="password" type="password" placeholder="Password">
+      <br>
+      <br>
+
+<label class="remember-row">
+    <input type="checkbox" id="rememberMe">
+    <span>Keep me signed in</span>
+</label>
+
+
+
+<button onclick="loginOrSignup()">Login / Sign Up</button>
+
+        <p>
+          First time? Just enter a new username and password.
+        </p>
+    </div>
+</div>
+
+<!-- APP -->
+
+<div id="app" class="hidden">
+
+<header>
+    <div class="logo"><img src="https://uploads.onecompiler.io/44ks3jcac/1780705503300/new-walt-disney-font-regular%20(1).png" alt="Wisney+"></div>
+
+    <button class="logout" onclick="logout()">
+        Logout
+    </button>
+</header>
+
+<div class="hero">
+    <div>
+      <h1>Welcome to Wisney+</h1>
+      <p></p>
+    </div>
+</div>
+
+<div class="search">
+    <input
+    id="searchBox"
+    placeholder="Search..."
+    oninput="renderMovies()">
+</div>
+
+<div class="section">
+    <h2>Continue Watching</h2>
+    <div id="continueWatching" class="row"></div>
+</div>
+
+<div class="section">
+    <h2>Favorites</h2>
+    <div id="favorites" class="row"></div>
+</div>
+
+<div class="section">
+    <h2>Movies</h2>
+    <div id="movies" class="row"></div>
+</div>
+
+  <footer class="footer">
+    <img src="https://uploads.onecompiler.io/44ks3jcac/1780705503300/new-walt-disney-font-regular%20(1).png"
+        alt="Wisney+"
+        class="footer-logo">
+
+    <div class="footer-links">
+        <p>Wisney Terms of Use</p>
+        <p>Privacy Policy</p>
+        <p>Help</p>
+    </div>
+
+    <div class="footer-copy">
+        © Wisney. All Rights Reserved.
+    </div>
+</footer>
+
+</div>
+
+<script>
+
+  document.body.classList.add("login-mode");
+  
+const movieList = [
+    "Ricky Rat",
+    "Test-1",
+    "Test-2",
+    "Test-3"
+];
+
+function getUsers(){
+    return JSON.parse(localStorage.getItem("users")) || {};
+}
+
+function saveUsers(users){
+    localStorage.setItem(
+        "users",
+        JSON.stringify(users)
+    );
+}
+
+function loginOrSignup(){
+
+    const username =
+        document.getElementById("username").value.trim();
+
+    const password =
+        document.getElementById("password").value;
+
+    if(!username || !password){
+        alert("Fill in all fields");
+        return;
+    }
+
+    const users = getUsers();
+
+    if(!users[username]){
+
+        users[username] = {
+            password,
+            favorites:[],
+            continueWatching:[]
+        };
+
+        saveUsers(users);
+    }
+
+    if(users[username].password !== password){
+        alert("Wrong password");
+        return;
+    }
+
+const rememberMe =
+    document.getElementById("rememberMe").checked;
+
+if (rememberMe) {
+    localStorage.setItem("currentUser", username);
+} else {
+    sessionStorage.setItem("currentUser", username);
+}
+
+    loadApp();
+}
+
+function logout(){
+    localStorage.removeItem("currentUser");
+sessionStorage.removeItem("currentUser");
+
+    document.getElementById("app").classList.add("hidden");
+    document.getElementById("authScreen").classList.remove("hidden");
+
+    document.body.classList.add("login-mode");
+}
+
+function currentUserData(){
+
+    const users = getUsers();
+
+    const currentUser =
+    localStorage.getItem("currentUser") ||
+    sessionStorage.getItem("currentUser");
+
+    return users[currentUser];
+}
+
+function saveCurrentUserData(data){
+
+    const users = getUsers();
+
+    const currentUser =
+    localStorage.getItem("currentUser") ||
+    sessionStorage.getItem("currentUser");
+
+    users[currentUser] = data;
+
+    saveUsers(users);
+}
+
+function toggleFavorite(title){
+
+    const user = currentUserData();
+
+    if(user.favorites.includes(title)){
+        user.favorites =
+            user.favorites.filter(
+                m => m !== title
+            );
+    }
+    else{
+        user.favorites.push(title);
+    }
+
+    saveCurrentUserData(user);
+
+    renderFavorites();
+    renderMovies();
+}
+
+function watchMovie(title){
+
+    const user = currentUserData();
+
+    const progress =
+        Math.floor(Math.random()*100)+1;
+
+    user.continueWatching =
+        user.continueWatching.filter(
+            m => m.title !== title
+        );
+
+    user.continueWatching.push({
+        title,
+        progress
+    });
+
+    saveCurrentUserData(user);
+
+    renderContinueWatching();
+}
+
+function renderMovies(){
+
+    const container =
+        document.getElementById("movies");
+
+    const search =
+        document.getElementById("searchBox")
+        .value.toLowerCase();
+
+    container.innerHTML = "";
+
+    const user = currentUserData();
+
+    movieList
+    .filter(movie =>
+        movie.toLowerCase().includes(search))
+    .forEach(movie => {
+
+        const favorite =
+            user.favorites.includes(movie);
+
+        container.innerHTML += `
+        <div class="card">
+            <div class="poster">
+                ${movie}
+            </div>
+
+            <div class="card-content">
+
+                <button
+                onclick="watchMovie('${movie}')">
+                Watch
+                </button>
+
+                <button
+                onclick="toggleFavorite('${movie}')">
+                ${favorite ?
+                'Remove Favorite'
+                :
+                'Add Favorite'}
+                </button>
+
+            </div>
+        </div>
+        `;
+    });
+}
+
+function renderFavorites(){
+
+    const container =
+        document.getElementById("favorites");
+
+    const user = currentUserData();
+
+    container.innerHTML = "";
+
+    user.favorites.forEach(movie => {
+
+        container.innerHTML += `
+        <div class="card">
+            <div class="poster">
+                ${movie}
+            </div>
+        </div>
+        `;
+    });
+}
+
+function renderContinueWatching(){
+
+    const container =
+        document.getElementById(
+            "continueWatching"
+        );
+
+    const user = currentUserData();
+
+    container.innerHTML = "";
+
+    user.continueWatching.forEach(movie => {
+
+        container.innerHTML += `
+        <div class="card">
+
+            <div class="poster">
+                ${movie.title}
+            </div>
+
+            <div class="card-content">
+
+                ${movie.progress}% watched
+
+                <div class="progress">
+                    <div
+                    class="progress-fill"
+                    style="
+                    width:${movie.progress}%">
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+        `;
+    });
+}
+
+function loadApp(){
+
+    document.getElementById("authScreen").classList.add("hidden");
+    document.getElementById("app").classList.remove("hidden");
+
+    document.body.classList.remove("login-mode");
+
+    renderMovies();
+    renderFavorites();
+    renderContinueWatching();
+}
+
+if(
+    localStorage.getItem("currentUser") ||
+    sessionStorage.getItem("currentUser")
+){
+    loadApp();
+}
+
+
+</script>
+
+</body>
+</html>
